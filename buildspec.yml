@@ -5,16 +5,17 @@ version: 0.2
 #   build:
 #     commands:
 #       - python helloworld.py
-phases:
-  install:
-    commands:
-      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+# phases:
+#   install:
+#     commands:
+#       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+#       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
 phases:
   build:
     commands:
       - $(aws ecr get-login --no-include-email --region us-east-1)
       - docker --version
-      - service docker start && docker build -t codebuild/debian-jessie -f packages/Dockerfile .
+      - service docker start
+      - docker build -t codebuild/debian-jessie -f packages/Dockerfile .
       - docker tag codebuild/debian-jessie:latest 855172423373.dkr.ecr.us-east-1.amazonaws.com/codebuild/debian-jessie:latest
       - docker push 855172423373.dkr.ecr.us-east-1.amazonaws.com/codebuild/debian-jessie:latest
