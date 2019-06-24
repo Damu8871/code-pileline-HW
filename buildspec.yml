@@ -4,5 +4,4 @@ version: 0.2
 phases:
   build:
     commands:
-      - apt-get install python
       - python helloworld.py
