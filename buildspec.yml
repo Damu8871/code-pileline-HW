@@ -10,6 +10,6 @@ phases:
   build:
     commands:
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - docker build -t codebuild/debian-jessie dockerfile/install-java8
+      - docker build -t codebuild/debian-jessie packages/Dockerfile
       - docker tag codebuild/debian-jessie:latest 855172423373.dkr.ecr.us-east-1.amazonaws.com/codebuild/debian-jessie:latest
       - docker push 855172423373.dkr.ecr.us-east-1.amazonaws.com/codebuild/debian-jessie:latest
