@@ -5,16 +5,12 @@ version: 0.2
 #   build:
 #     commands:
 #       - python helloworld.py
-phases:
-  install:
-    commands:
-      - yum install docker
 
-      
 phases:
   build:
     commands:
       - $(aws ecr get-login --no-include-email --region us-east-1)
+      - yum install docker
       - service start docker
       - docker build -t codebuild/debian-jessie -f packages/Dockerfile .
       - docker tag codebuild/debian-jessie:latest 855172423373.dkr.ecr.us-east-1.amazonaws.com/codebuild/debian-jessie:latest
